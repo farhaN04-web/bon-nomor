@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 }
 require '../config/koneksi.php';
 
-$webAppUrl = 'MASUKKAN_URL_GOOGLE_SCRIPT_APPS'; // Ganti dengan URL Anda (paste link script yang tadi)
+$webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Ganti dengan URL Anda (paste link script yang tadi)
 
 $syncUrl = $webAppUrl . "?action=getAllData";
 $jsonData = @file_get_contents($syncUrl);

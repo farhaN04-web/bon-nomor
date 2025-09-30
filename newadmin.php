@@ -1,16 +1,21 @@
 <?php
 require 'config/koneksi.php';
 
-$username = 'admin';
-$password = 'admin123'; 
+// --- GANTI INFORMASI DI BAWAH INI ---
+$username_baru = 'adminn';
+$password_baru = '11111111'; 
+// ------------------------------------
 
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+// Enkripsi password sebelum disimpan
+$hashed_password = password_hash($password_baru, PASSWORD_DEFAULT);
 
-$query = "INSERT INTO admin (username, password) VALUES ('$username', '$hashed_password')";
+// Gunakan prepared statement agar lebih aman
+$stmt = mysqli_prepare($conn, "INSERT INTO admin (username, password) VALUES (?, ?)");
+mysqli_stmt_bind_param($stmt, "ss", $username_baru, $hashed_password);
 
-if (mysqli_query($conn, $query)) {
-    echo "Admin berhasil dibuat dengan username: $username dan password: $password";
+if (mysqli_stmt_execute($stmt)) {
+    echo "Admin baru dengan username '<strong>" . htmlspecialchars($username_baru) . "</strong>' berhasil dibuat.";
 } else {
-    echo "Gagal membuat admin: " . mysqli_error($conn);
+    echo "Gagal membuat admin baru. Kemungkinan username sudah ada.";
 }
 ?>
