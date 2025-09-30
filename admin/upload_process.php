@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_arsip']) && isse
                     $nomor_surat_lengkap = $surat_row['nomor_surat'];
 
                     // 3. KIRIM PERMINTAAN UPDATE KE GOOGLE SHEETS
-                    $webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec';
+                    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT_YANG_SUDAH_DI_DEPLOY';
                     $updateParams = http_build_query([
                         'action'     => 'updateStatus',
                         'nomorSurat' => $nomor_surat_lengkap,

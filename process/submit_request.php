@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($stmt_insert);
     
     // 5. Kirim data ke Google Sheets
-    $webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Pastikan URL ini benar
+    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT_YANG_SUDAH_DI_DEPLOY';
     $postData = [
         'tanggal'      => date('d/m/Y'),
         'nomor_surat'  => $nomor_surat_lengkap,

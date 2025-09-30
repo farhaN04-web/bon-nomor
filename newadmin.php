@@ -2,8 +2,8 @@
 require 'config/koneksi.php';
 
 // --- GANTI INFORMASI DI BAWAH INI ---
-$username_baru = 'adminn';
-$password_baru = '11111111'; 
+$username_baru = 'useradmin';
+$password_baru = 'passwordadmin'; 
 // ------------------------------------
 
 // Enkripsi password sebelum disimpan
