@@ -218,7 +218,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'riwayat';
                     </div>
                     <?php endwhile; ?>
                     
-                    <small>Nomor urut akan dimulai dari angka ini + jumlah surat yang sudah ada di tahun ini untuk kategori tersebut.</small>
+                    <small>Nomor urut akan dimulai dari angka ini.</small>
                     <br><br>
                     <button type="submit" name="update_pengaturan" class="btn-yellow">Simpan Pengaturan</button>
                 </form>

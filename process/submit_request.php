@@ -29,12 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result_nomor = mysqli_stmt_get_result($stmt_nomor);
     $nomor_awal_row = mysqli_fetch_assoc($result_nomor);
     $nomor_awal = $nomor_awal_row ? (int)$nomor_awal_row['nomor_awal'] : 1;
-    $stmt_count = mysqli_prepare($conn, "SELECT COUNT(id) as count FROM surat WHERE kategori = ? AND YEAR(tanggal_pengajuan) = ?");
-    mysqli_stmt_bind_param($stmt_count, 'ss', $kategori, $year);
-    mysqli_stmt_execute($stmt_count);
-    $result_count = mysqli_stmt_get_result($stmt_count);
-    $row_count = mysqli_fetch_assoc($result_count);
-    $next_number = $row_count['count'] + $nomor_awal;
+    
+    $stmt_max = mysqli_prepare($conn, "SELECT MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(nomor_surat, '/', 2), '/', -1) AS UNSIGNED)) as max_num FROM surat WHERE kategori = ? AND YEAR(tanggal_pengajuan) = ?");
+    mysqli_stmt_bind_param($stmt_max, 'ss', $kategori, $year);
+    mysqli_stmt_execute($stmt_max);
+    $result_max = mysqli_stmt_get_result($stmt_max);
+    $row_max = mysqli_fetch_assoc($result_max);
+    $max_number = $row_max['max_num'] ? (int)$row_max['max_num'] : 0;
+
+    if ($max_number < $nomor_awal) {
+        $next_number = $nomor_awal;
+    } else {
+        $next_number = $max_number + 1;
+    }
 
     $prefix = '';
     switch ($kategori) {
@@ -77,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($stmt_insert);
     
     // 5. Kirim data ke Google Sheets
-    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT_YANG_SUDAH_DI_DEPLOY';
+    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT'; // Pastikan URL ini benar
     $postData = [
         'tanggal'      => date('d/m/Y'),
         'nomor_surat'  => $nomor_surat_lengkap,

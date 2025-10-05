@@ -6,7 +6,8 @@ if (!isset($_SESSION['admin_logged_in'])) {
 }
 require '../config/koneksi.php';
 
-$webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT_YANG_SUDAH_DI_DEPLOY'; 
+$webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT'; // Ganti dengan URL Anda (paste link script yang tadi)
+
 $syncUrl = $webAppUrl . "?action=getAllData";
 $jsonData = @file_get_contents($syncUrl);
 $dataBySheet = json_decode($jsonData, true);
