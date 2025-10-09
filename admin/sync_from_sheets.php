@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 }
 require '../config/koneksi.php';
 
-$webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT'; // Ganti dengan URL Anda (paste link script yang tadi)
+$webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Ganti dengan URL Anda (paste link script yang tadi)
 
 $syncUrl = $webAppUrl . "?action=getAllData";
 $jsonData = @file_get_contents($syncUrl);
@@ -29,10 +29,7 @@ foreach ($dataBySheet as $kategori => $rows) {
     if (!is_array($rows)) continue;
 
     foreach ($rows as $row) {
-        // Cek jumlah kolom minimal 7, karena TTD bisa jadi belum ada
         if (!is_array($row) || count($row) < 6 || empty(trim($row[1]))) continue; 
-
-        // URUTAN PEMBACAAN DATA DISESUAIKAN (tanpa kolom kategori internal)
         $tanggal_str = trim($row[0]);
         $nomor_surat = trim($row[1]);
         $kepada = trim($row[2]);

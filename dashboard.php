@@ -63,12 +63,8 @@ case 'riwayat':
             </thead>
             <tbody>
                 <?php
-                // --- QUERY PENCARIAN DENGAN FILTER USER_ID ---
                 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-                
-                // Query dasar sekarang selalu memfilter berdasarkan user_id
                 $query = "SELECT * FROM surat WHERE user_id = ?";
-                
                 $params = [$user_id];
                 $types = 'i';
 

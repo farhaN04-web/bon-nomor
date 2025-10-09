@@ -1,7 +1,6 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) { session_start(); }
 
-// Jika pengguna sudah login, langsung arahkan ke dashboard
 if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
     header('Location: dashboard.php');
     exit();

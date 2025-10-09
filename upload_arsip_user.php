@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require 'config/koneksi.php';
 
-// Keamanan dasar & ambil data surat
 if (!isset($_GET['id'])) die('Error: ID Surat tidak ditemukan.');
 $id = (int)$_GET['id'];
 $query = "SELECT nomor_surat, perihal FROM surat WHERE id = $id AND file_arsip IS NULL";

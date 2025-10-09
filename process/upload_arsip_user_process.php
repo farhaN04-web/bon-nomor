@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file_arsip']) && isse
                     $nomor_surat_lengkap = $surat_row['nomor_surat'];
 
                     // b. Siapkan URL dan parameter untuk dikirim
-                    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT'; // Ganti dengan URL Anda
+                    $webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Ganti dengan URL Anda
                     $updateParams = http_build_query([
                         'action'     => 'updateStatus',
                         'nomorSurat' => $nomor_surat_lengkap,

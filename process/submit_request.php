@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Keamanan: pastikan pengguna sudah login
+
 if (!isset($_SESSION['user_logged_in']) || !isset($_SESSION['user_id'])) {
     die('Akses ditolak. Silakan login terlebih dahulu.');
 }
@@ -8,18 +8,12 @@ if (!isset($_SESSION['user_logged_in']) || !isset($_SESSION['user_id'])) {
 require_once '../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-    // AMBIL ID PENGGUNA DARI SESSION
     $user_id = $_SESSION['user_id'];
-
-    // Ambil data form
     $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
     $kepada = mysqli_real_escape_string($conn, $_POST['kepada']);
     $perihal = mysqli_real_escape_string($conn, $_POST['perihal']);
     $nama_pengaju = mysqli_real_escape_string($conn, $_POST['nama_pengaju']);
     $konseptor = mysqli_real_escape_string($conn, $_POST['konseptor']);
-    
-    // Logika Penomoran Lengkap (per kategori)
     $year = date('Y');
     $month = date('n');
     $romanMonth = getRomanMonth($month);
@@ -29,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result_nomor = mysqli_stmt_get_result($stmt_nomor);
     $nomor_awal_row = mysqli_fetch_assoc($result_nomor);
     $nomor_awal = $nomor_awal_row ? (int)$nomor_awal_row['nomor_awal'] : 1;
-    
     $stmt_max = mysqli_prepare($conn, "SELECT MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(nomor_surat, '/', 2), '/', -1) AS UNSIGNED)) as max_num FROM surat WHERE kategori = ? AND YEAR(tanggal_pengajuan) = ?");
     mysqli_stmt_bind_param($stmt_max, 'ss', $kategori, $year);
     mysqli_stmt_execute($stmt_max);
@@ -60,8 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         default: $prefix = 'B';
     }
     $nomor_surat_lengkap = sprintf("%s/%d/%s/%s", $prefix, $next_number, $romanMonth, $year);
-
-    // Logika Upload File Opsional
     $arsipStatus = "belum";
     $namaFileUntukDB = null;
     if (isset($_FILES['file_arsip']) && $_FILES['file_arsip']['error'] == 0) {
@@ -78,13 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // SIMPAN KE DATABASE LOKAL DENGAN USER_ID
     $stmt_insert = mysqli_prepare($conn, "INSERT INTO surat (user_id, nomor_surat, kategori, kepada, perihal, nama_pengaju, konseptor, file_arsip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt_insert, 'isssssss', $user_id, $nomor_surat_lengkap, $kategori, $kepada, $perihal, $nama_pengaju, $konseptor, $namaFileUntukDB);
     mysqli_stmt_execute($stmt_insert);
-    
-    // 5. Kirim data ke Google Sheets
-    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT'; // Pastikan URL ini benar
+    $webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Pastikan URL ini benar
     $postData = [
         'tanggal'      => date('d/m/Y'),
         'nomor_surat'  => $nomor_surat_lengkap,
@@ -99,8 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_setopt_array($ch, [ CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => true, CURLOPT_POSTFIELDS => http_build_query($postData) ]);
     curl_exec($ch);
     curl_close($ch);
-    
-    // Set session untuk ditampilkan di halaman form
     $_SESSION['bon_nomor_result'] = [
         'nomor_surat_display' => $next_number,
         'kategori' => $_POST['kategori'],

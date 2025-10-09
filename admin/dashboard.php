@@ -1,31 +1,25 @@
 <?php
 session_start();
-// Timeout
 $lifetime = 86400;
 
 if (isset($_SESSION['admin_login_timestamp']) && (time() - $_SESSION['admin_login_timestamp']) > $timeout_duration) {
-    session_unset();    // Hapus semua variabel sesi
-    session_destroy();  // Hancurkan sesi
-    header("Location: index.php?pesan=sesi_berakhir"); // Arahkan ke login dengan pesan
+    session_unset();
+    session_destroy();
+    header("Location: index.php?pesan=sesi_berakhir");
     exit();
 }
 
-// Keamanan: Jika belum login, masih ke halaman login
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: index.php');
     exit();
 }
 require '../config/koneksi.php';
 
-// Proses update pengaturan jika ada form yang disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_pengaturan'])) {
-    // Update Waktu
     $waktu_buka = $_POST['waktu_buka'];
     $waktu_tutup = $_POST['waktu_tutup'];
     mysqli_query($conn, "UPDATE pengaturan SET setting_nilai = '$waktu_buka' WHERE setting_nama = 'waktu_buka'");
     mysqli_query($conn, "UPDATE pengaturan SET setting_nilai = '$waktu_tutup' WHERE setting_nama = 'waktu_tutup'");
-
-    // Update Nomor Awal per Kategori
     if (isset($_POST['nomor_awal']) && is_array($_POST['nomor_awal'])) {
         foreach ($_POST['nomor_awal'] as $kategori => $nomor) {
             $kategori_aman = mysqli_real_escape_string($conn, $kategori);
@@ -39,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_pengaturan'])) 
     $pesan_sukses = "Pengaturan berhasil diperbarui.";
 }
 
-// Ambil data pengaturan waktu
 $pengaturan_query = mysqli_query($conn, "SELECT * FROM pengaturan");
 $pengaturan = [];
 while($row = mysqli_fetch_assoc($pengaturan_query)) {
@@ -118,7 +111,6 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'riwayat';
                     </thead>
                     <tbody>
                         <?php
-                            // Pencarian Tanggal Admin
                             $search = isset($_GET['search']) ? trim($_GET['search']) : '';
                             $query = "SELECT * FROM surat ";
                             $params = [];

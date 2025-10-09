@@ -44,7 +44,7 @@
             transition: all 0.3s ease;
         }
         .top-right-buttons a.btn-register {
-            background-color: #fecb00; /* Warna kuning khas */
+            background-color: #fecb00;
             border-color: #fecb00;
             color: #333;
         }
