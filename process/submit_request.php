@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_insert = mysqli_prepare($conn, "INSERT INTO surat (user_id, nomor_surat, kategori, kepada, perihal, nama_pengaju, konseptor, file_arsip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt_insert, 'isssssss', $user_id, $nomor_surat_lengkap, $kategori, $kepada, $perihal, $nama_pengaju, $konseptor, $namaFileUntukDB);
     mysqli_stmt_execute($stmt_insert);
-    $webAppUrl = 'https://script.google.com/macros/s/AKfycbzjSq3VcJQIQpuuJG4HrId2X4tQhJvCLf3to_-QR8IVfAnZiXZ_qQvB97KrwfJWTSWV/exec'; // Pastikan URL ini benar
+    $webAppUrl = 'MASUKKAN_URL_GOOGLE_APPS_SCRIPT';
     $postData = [
         'tanggal'      => date('d/m/Y'),
         'nomor_surat'  => $nomor_surat_lengkap,
