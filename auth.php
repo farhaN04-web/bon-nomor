@@ -14,6 +14,7 @@ $form_type = isset($_GET['form']) && $_GET['form'] == 'register' ? 'register' : 
     <meta charset="UTF-8">
     <title><?= ($form_type == 'login') ? 'Login Pengguna' : 'Registrasi Pengguna'; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/logo.png">
     <style>
         body { 
             display: flex; 

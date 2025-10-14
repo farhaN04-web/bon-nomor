@@ -47,6 +47,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'riwayat';
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/img/logo.png">
     <style>
         .admin-wrapper { display: flex; }
         .sidebar { width: 250px; background: #333; color: white; min-height: 100vh; flex-shrink: 0; }

@@ -5,14 +5,19 @@
     <meta charset="UTF-8">
     <title>Login Admin</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../assets/img/logo.png">
     <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; background-image: url('../assets/img/sium.png'); background-size: 500px; background-position: center; background-repeat: no-repeat; }
         .login-box { padding: 40px; background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; }
         .login-box h2 { text-align: center; margin-bottom: 20px; }
         .login-box .form-group { margin-bottom: 15px; }
         .login-box input { width: 100%; }
         .login-box button { width: 100%; }
         .error-msg { color: red; text-align: center; margin-bottom: 15px; }
+
+        body::before {
+            background-image: none !important;
+        }
     </style>
 </head>
 <body>
